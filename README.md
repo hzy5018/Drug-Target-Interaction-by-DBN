@@ -1,4 +1,4 @@
-# DBN-Drug-Target-Interaction
+# Drug-Target-Interaction-by-DBN
 ## Introduction
 - A tensorflow implementation of modified DeepDTI(http://pubs.acs.org/doi/abs/10.1021/acs.jproteome.6b00618).
 - We focus on the pockets on proteins, instead of the whole sequences described in the paper.
