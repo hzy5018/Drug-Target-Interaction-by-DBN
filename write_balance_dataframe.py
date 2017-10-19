@@ -20,6 +20,12 @@ print sub
     'read1folder' is the function to read ONE folder with [1]ecfp and [2]protein sequence files
 """
 def read1folder(a):
+    if a[0].split('/')[-1][0:4] == "ecfp": # Determine which file is ecfp for drug.
+        drug_file = a[0]
+        protein_file = a[1] # The other one is file for protein/pocket
+    else:
+        drug_file = a[1]
+        protein_file = a[0]
     
     """
         First, read the ecfp file
@@ -30,7 +36,7 @@ def read1folder(a):
     measurement_value = []
     new_value = []
     measurement_type = []
-    with open(a[0]) as f:
+    with open(drug_file) as f:
         # skip the first line of file
         next(f)
         for line in f:
@@ -62,7 +68,7 @@ def read1folder(a):
         Then, read the proetin sequence descriptor
     """
     descriptor = []
-    with open(a[1]) as f2:
+    with open(protein_file) as f2:
         # skip the first line of file
         next(f2)
         for line in f2:
@@ -81,8 +87,8 @@ def read1folder(a):
     """
     df_sort_YN['protein'] = protein
 
-    path = a[0].split('ecfp')[0]
-    name = a[0].split('ecfp')[1]
+    path = drug_file.split('ecfp')[0]
+    name = drug_file.split('ecfp')[1]
     
     df_sort_YN.to_csv(path+'test'+name )
 
