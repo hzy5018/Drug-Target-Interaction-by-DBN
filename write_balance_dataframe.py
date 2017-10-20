@@ -90,7 +90,7 @@ def read1folder(a):
     path = drug_file.split('ecfp')[0]
     name = drug_file.split('ecfp')[1]
     
-    df_sort_YN.to_csv(path+'test'+name )
+    df_sort_YN.to_csv(path+'balance_df'+name )
 
 for i in range(len(sub)):
     read1folder(sub[i])
