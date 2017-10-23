@@ -16,8 +16,6 @@ for root, dirs, files in os.walk(rootdir):
 sub =  subfolder[1:]# The fisrt element of subfolder is [], we need to drop it.
 print sub
 
-# sub = [['./CDK_datasets/CHEMBL1907602-P06493/id_df_bit_CHEMBL1907602-P06493_info.csv'], ['./CDK_datasets/CHEMBL2094128-P24941/id_df_bit_CHEMBL2094128-P24941_info.csv']]
-
 def read1folder(a):
     df = pd.DataFrame.from_csv(a[0])
     CHEMBL_id = a[0].split('/')[2].split('-')[0]
