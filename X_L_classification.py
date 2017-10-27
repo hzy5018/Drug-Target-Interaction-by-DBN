@@ -22,37 +22,36 @@ with open(drugfile) as f:
         new_value.append( float(each_line[4]) )
         measurement_type.append( each_line[5] )
 
-    df = pd.DataFrame()
-    df['target'] = pd.Series(target)
-    df['canonical_smiles'] = pd.Series(canonical_smiles)
-    df['ecfp'] = pd.Series(ecfp)
-    df['measurement_value'] = pd.Series(measurement_value)
-    df['new_value'] = pd.Series(new_value)
-    df['measurement_type'] = pd.Series(measurement_type)
-    df['Y'] = pd.Series(df['new_value']<=10)
+df = pd.DataFrame()
+df['target'] = pd.Series(target)
+df['canonical_smiles'] = pd.Series(canonical_smiles)
+df['ecfp'] = pd.Series(ecfp)
+df['measurement_value'] = pd.Series(measurement_value)
+df['new_value'] = pd.Series(new_value)
+df['measurement_type'] = pd.Series(measurement_type)
+df['Y'] = pd.Series(df['new_value']<=10)
 
-    df_sort = df.sort_values('new_value')
-    # '(df['Y']==True).sum()' will gives the number of compounds that have measurement values less that 100
-    df_sort_Y = df_sort[:(df['Y']==True).sum()] # Pick all positive drugs, first N in dataframe
-    df_sort_N = df_sort[-(df['Y']==True).sum():] # Pick up last N in dataframe
-    df_sort_YN = pd.concat([df_sort_Y,df_sort_N])
+df_sort = df.sort_values('new_value')
+# '(df['Y']==True).sum()' will gives the number of compounds that have measurement values less that 100
+df_sort_Y = df_sort[:(df['Y']==True).sum()] # Pick all positive drugs, first N in dataframe
+df_sort_N = df_sort[-(df['Y']==True).sum():] # Pick up last N in dataframe
+df_sort_YN = pd.concat([df_sort_Y,df_sort_N])
 
-    """Get the labels"""
-    Y = list(df_sort_YN['Y'])
-    Y0 = [0]*len(Y)
-    for i in range(len(Y)):
-        
-        if Y[i] == True:
-            Y0[i] = 1
+"""Get the labels"""
+Y = list(df_sort_YN['Y'])
+Y0 = [0]*len(Y)
+for i in range(len(Y)):
+    if Y[i] == True:
+        Y0[i] = 1
 
-    b = []
-    """"Get the ecfp"""
-    drug = list(df_sort_YN['ecfp'])
-    for i in drug:
-        ecfp = []
-        for n in i:
-            ecfp.append(int(n))
-        b.append(ecfp)
+b = []
+""""Get the ecfp"""
+drug = list(df_sort_YN['ecfp'])
+for i in drug:
+    ecfp = []
+    for n in i:
+        ecfp.append(int(n))
+    b.append(ecfp)
 
 np.savetxt('X.txt', b, fmt = '%d')
 np.savetxt('Y.txt', Y0, fmt = '%d')
