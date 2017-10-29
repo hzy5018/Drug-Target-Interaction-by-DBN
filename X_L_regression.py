@@ -56,7 +56,7 @@ def read1folder(a):
     path =  a.split('ecfp')[0]
     name =  a.split('ecfp')[1].split('_info')[0]
     np.savetxt(path + 'X' + name + '.txt', b, fmt = '%d')
-    np.savetxt(path + 'Y' + name + '.txt', log_value, fmt = '%d')
+    np.savetxt(path + 'Y' + name + '.txt', log_value, fmt = '%.2f')
     print len(b), len(log_value)
 
 for a in f_test:
